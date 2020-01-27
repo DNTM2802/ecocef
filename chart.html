@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Reciclagem</title>
+</head>
+<body>
+
+<h1>This is a Heading</h1>
+<p>This is a paragraph.</p>
+    <canvas id="myChart"></canvas> 
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var dados = [[35,'10ºA'], [45,'12ºB'], [23,'9ºC'], [67,'8ºD'], [123,'10ºC'], [12,'11ºH'], [5,'12ºC'], [300, '10ºB']];
+var dados = dados.sort(function(a, b) {
+  return b[0] - a[0];
+});
+console.log(dados);
+var turmas = [];
+var lixo = [];
+
+for (var i = 0; i < dados.length;i++){
+    turmas.push(dados[i][1]);
+    lixo.push(dados[i][0]);
+}
+console.log(turmas);
+console.log(lixo);
+
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'horizontalBar',
+    
+    // The data for our dataset
+    data: {
+        labels: turmas,
+        datasets: [{
+            label: 'Lixo acumulado em Kg',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: lixo
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+        scales: {
+            yAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Turma'
+                }
+            }],
+            xAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Quantidade de lixo em Kg'
+                }
+            }],
+        }
+    }
+});
+</script>
+</html>
