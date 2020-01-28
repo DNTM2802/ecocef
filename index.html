@@ -371,6 +371,10 @@ border-color: rgb(36, 124, 164);
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="js/slick.js"></script>
 <script>
+  document.cookie = 'same-site-cookie=foo; SameSite=Lax';
+  document.cookie = 'cross-site-cookie=bar; SameSite=None; Secure';
+</script>
+<script>
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
