@@ -150,6 +150,23 @@
 .display-4 {
   font-size: 2.5rem;
 }
+
+.btn-primary {
+background-color: rgb(36, 124, 164);
+border-color: rgb(36, 124, 164);
+
+}
+
+.btn-primary:active, .btn-primary:focus, .btn-primary:hover {
+    background-color: rgb(25, 85, 112)!important;
+    border-color: rgb(25, 85, 112)!important;
+}
+
+.btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(25, 85, 112,.5);
+}
+
+
 </style>
 <body>
 
@@ -193,7 +210,7 @@
       <div class="row align-items-center">
         <div class="col-lg-6 order-lg-2">
           <div class="p-5">
-            <img class="img-fluid rounded-circle" src="img/cef.png" alt="">
+            <a href="http://cef.pt" target="_blank"><img class="img-fluid rounded-circle" src="img/cef.png" alt=""></a>
           </div>
         </div>
         <div class="col-lg-6 order-lg-1">
@@ -218,7 +235,7 @@
         <div class="col-lg-6">
           <div class="p-5">
             <h2 class="display-4">Como participar?</h2>
-            <p>Para participar basta que, ao longo de cada período letivo, cada turma faça a sua própria reciclagem CORRETAMENTE nos ecopontos presentes nas respetivas salas. No final de cada período, é feita uma pesagem do lixo reciclado por cada uma das turmas do CEF, sendo que as 3 turmas que mais reciclarem são premiadas!</p>
+            <p>Para participar basta que, ao longo de cada período letivo, cada turma faça a sua própria reciclagem <a data-toggle="modal" data-target="#exampleModalCenter"><strong>CORRETAMENTE</a> nos ecopontos presentes nas respetivas salas</strong>. No final de cada período, é feita uma pesagem do lixo reciclado por cada uma das turmas do CEF, sendo que as 3 turmas que mais reciclarem são premiadas!</p>
             <a href="#" class="btn btn-primary btn-xl rounded-pill mt-5" data-toggle="modal" data-target="#exampleModalCenter">Como reciclar no CEF?</a>
           </div>
         </div>
@@ -231,17 +248,20 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Como reciclar no CEF?</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+        <p>No CEF é pedido aos alunos que reciclem o plástico, o metal e o papel. Existem ecopontos nas salas de cada turma, sendo que:</p>
+        <p>- O <strong style="color: rgb(255, 230, 0)">PÁSTICO/METAL/EMBALAGENS</strong> são colocados no ecoponto <strong style="color: rgb(255, 230, 0);">AMARELO</strong>.</p>
+        <p>- O <strong style="color: rgb(21, 46, 182)">PAPEL/CARTÃO</strong> é colocado no ecoponto <strong style="color: rgb(21, 46, 182)">AZUL</strong>. </p>
+          <p><strong>ATENÇÃO: As embalagens de sumo, leite, etc, não são papel. São colocadas no ecoponto AMARELO!</strong></p>
+        <img src="img/recycle.png" style="width: 100%;">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Percebi!</button>
       </div>
     </div>
   </div>
@@ -281,11 +301,17 @@
         <div class="col-lg-4 order-lg-2">
           
           <div class="p-5">
-            <p><strong>Atualizado em:</strong></p>
+            
+                <p><strong>Atualizado em:</strong></p>
             <p>25/01/2020</p>
+            <div class="card border-danger">
+              <div class="card-body">
             <p>Ainda tens...</p>
             <p style="font-weight: bold;" id="demo"></p>
             <p>... para reciclar!</p>
+              </div>
+            </div>
+            
           </div>
 
         </div>
@@ -379,8 +405,8 @@ async function secondFunction(){
           labels: turmas,
           datasets: [{
               label: 'Lixo reciclado em Kg',
-              backgroundColor: 'rgb(255, 99, 132)',
-              borderColor: 'rgb(255, 99, 132)',
+              backgroundColor: 'rgb(36, 124, 164)',
+              borderColor: 'rgb(36, 124, 164)',
               data: lixo
           }]
       },
@@ -388,7 +414,6 @@ async function secondFunction(){
       // Configuration options go here
       options: {
         responsive: true,
-        
           scales: {
               yAxes: [{
                 maxBarThickness: 50,
