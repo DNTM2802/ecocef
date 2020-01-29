@@ -219,7 +219,7 @@ border-color: rgb(36, 124, 164);
         </div>
         <div class="col-lg-6 order-lg-1">
           <div class="p-5">
-            <h2 class="display-4">Um projeto do CEF para o CEF...</h2>
+            <h2 class="display-4">Um projeto do CEF... para o CEF</h2>
             <p>O projeto EcoCEF é um projeto criado pela turma B do 10º ano e tem como objetivo promover a reciclagem na escola através de uma competição saudável inter-turmas. É muito simples... a turma que mais reciclar, ganha!</p>
           </div>
         </div>
@@ -293,13 +293,14 @@ border-color: rgb(36, 124, 164);
     <div class="container">
       <div class="row align-items-center" style="text-align: center; align-items: center; align-content: center;">
         <div class="col-lg-12">
-          <h2 class="display-4 p-5">Competição</h2>
+          <h2 style="padding-left: 0!important;padding-right:0!important ;" class="display-4 p-5">Competição</h2>
         </div>
       </div>
       <div class="row align-items-center">
-        <div class="col-lg-8 order-lg-2">
+        <div id="size_div" class="col-lg-8 text-center order-lg-2">
           
-          <canvas style="display: inline;" id="myChart"></canvas>
+          <!-- <canvas style="display: inline;" id="myChart"></canvas> -->
+          <div id="chart_div" style="width: 100%;"></div>
 
         </div>
         <div class="col-lg-4 order-lg-2">
@@ -327,7 +328,7 @@ border-color: rgb(36, 124, 164);
     <div class="container">
       <div class="row align-items-center" style="text-align: center; align-items: center; align-content: center;">
         <div class="col-lg-12">
-          <h2 class="display-4 p-5">Patrocinadores</h2>
+          <h2 style="padding-left: 0!important;padding-right: 0!important" class="display-4 p-5">Patrocinadores</h2>
         </div>
       </div>
       <div class="row align-items-center">
@@ -374,6 +375,64 @@ border-color: rgb(36, 124, 164);
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="js/slick.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+    var size_div = 0;
+    $(document).ready(function(){
+      size_div = document.getElementById('size_div').offsetWidth;
+      console.log(size_div);
+      google.charts.load('current', {'packages':['corechart']});
+
+// Set a callback to run when the Google Visualization API is loaded.
+google.charts.setOnLoadCallback(drawChart);
+    });
+    
+    $(window).resize(function() {
+      size_div = document.getElementById('size_div').offsetWidth;
+      console.log(size_div);
+      google.charts.load('current', {'packages':['corechart']});
+
+// Set a callback to run when the Google Visualization API is loaded.
+google.charts.setOnLoadCallback(drawChart);
+    });
+
+      // Load the Visualization API and the corechart package.
+     
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        var query = new google.visualization.Query("https://docs.google.com/spreadsheets/d/1d6qfIWUlLAUb7GZl5HSnlKjbqv0CsKvaUcc8cPfcOeI/edit?sheet=Folha2&range=A2:B13#gid=0");
+        query.send(handleQueryResponse);
+
+        // Set chart options
+        // var options = {'title':'How Much Pizza I Ate Last Night',
+        //                'width':400,
+        //                'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        // var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        // chart.draw(data, options);
+      }
+
+      function handleQueryResponse(response) {
+        if (response.isError()) {
+        alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+        return;
+      }
+      
+      var options = {'title':'Quantidade de lixo reciclado por turma em Kg',
+                     'width':size_div,
+                     'height':300,
+                     'legend': 'none'};
+        var data = response.getDataTable();
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+      
+    </script>
 <script>
   document.cookie = 'same-site-cookie=foo; SameSite=Lax';
   document.cookie = 'cross-site-cookie=bar; SameSite=None; Secure';
@@ -389,77 +448,10 @@ border-color: rgb(36, 124, 164);
     });
 });
 </script>
-<script>
-  var ctx = document.getElementById('myChart').getContext('2d');
-  var dados = {};
-  var dados_new=[];
-  var turmas = [];
-  var lixo = [];
-  let firstFunction = new Promise(function(resolve, reject) {
-    $.getJSON('https://api.myjson.com/bins/jxgcy', function(data) {
-      resolve(dados = data);
-    });
-    
-})
 
-async function secondFunction(){
-    let dados = await firstFunction
-    dados.forEach(function (pair) {
-      dados_new.push([pair.LIXO,pair.TURMA])
-    });
-    dados_new = dados_new.sort(function(a, b) {
-      return b[0] - a[0];
-    });
-    for (var i = 0; i < dados_new.length;i++){
-      turmas.push(dados_new[i][1]);
-      lixo.push(dados_new[i][0]);
-    }
-  
-    var chart = new Chart(ctx, {
-      // The type of chart we want to create
-      type: 'horizontalBar',
-      
-      // The data for our dataset
-      data: {
-          labels: turmas,
-          datasets: [{
-              label: 'Lixo reciclado em Kg',
-              backgroundColor: 'rgb(36, 124, 164)',
-              borderColor: 'rgb(36, 124, 164)',
-              data: lixo
-          }]
-      },
-  
-      // Configuration options go here
-      options: {
-        responsive: true,
-          scales: {
-              yAxes: [{
-                maxBarThickness: 50,
-                  scaleLabel: {
-                    
-                      display: false,
-                      labelString: 'Turma'
-                  }
-              }],
-              xAxes: [{
-                  scaleLabel: {
-                      display: true,
-                      labelString: 'Quantidade de lixo reciclado em Kg'
-                  }
-              }],
-          }
-      }
-  });
-}; 
-
-secondFunction();
-
-
-  </script>
   <script>
     // Set the date we're counting down to
-    var countDownDate = new Date("Mar 27, 2020 23:59:59").getTime();
+    var countDownDate = new Date("Mar 27, 2020 18:00:00").getTime();
     
     // Update the count down every 1 second
     var x = setInterval(function() {
